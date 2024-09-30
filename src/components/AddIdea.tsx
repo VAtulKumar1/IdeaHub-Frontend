@@ -63,7 +63,6 @@ const AddIdea  = ()=>{
 
     return(
         <div className="flex flex-col">
-            <Navbar/>
             <div className="flex flex-col mt-24 gap-4">
                 <h1 className="flex justify-center p-2 font-mono text-white text-5xl font-bold">Share Your Vision</h1>
                 <h2 className="flex justify-center p-2 text-3xl gap-4 text-red-600 font-bold font-mono">An Idea Can Shape the Future – Submit and Inspire Change</h2>

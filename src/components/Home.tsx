@@ -6,7 +6,6 @@ import Buttons from "./Buttons";
 const Home = () => {
     return(
         <div>
-            <Navbar/>
             <div className="mb-24">
                 <AnimatedHeadLine/>
             </div>

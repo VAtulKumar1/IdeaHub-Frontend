@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Navbar = ()=>{
     return (
         <>
@@ -14,16 +16,16 @@ const Navbar = ()=>{
                     font-mono
                     ">
                     <li>
-                        <a className="hover:text-red-600" href="/home">Home</a>
+                        <Link className="hover:text-red-600" to="/home">Home</Link>
                     </li>
                     <li>
-                        <a className="hover:text-red-600" href="/post">Post An Idea</a>
+                        <Link className="hover:text-red-600" to="/post">Post An Idea</Link>
                     </li>
                     <li>
-                        <a className="hover:text-red-600" href="/about">About</a>
+                        <Link className="hover:text-red-600" to="/about">About</Link>
                     </li>
                     <li>
-                        <a className="hover:text-red-600" href="/Contact">Contact</a>
+                        <Link className="hover:text-red-600" to="/Contact">Contact</Link>
                     </li>
                 </div>
 
