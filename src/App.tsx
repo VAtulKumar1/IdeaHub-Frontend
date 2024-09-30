@@ -12,6 +12,7 @@ function App() {
   return (
     
       <div className="w-screen bg-gradient-to-r from-slate-950 to-slate-800">
+        
             <Navbar/>
             <Routes>
                 <Route path='/' element={<Home/>}/>

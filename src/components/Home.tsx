@@ -1,5 +1,4 @@
 import AnimatedHeadLine from "./AnimatedHeadLine";
-import Navbar from "./Navbar";
 import Buttons from "./Buttons";
 
 
