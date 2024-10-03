@@ -29,7 +29,7 @@ const Navbar = ()=>{
                         </li>
                     </div>
                     <div className="pl-10 gap-x-4 flex justify-end items-center text-white pr-10">
-                        <Link to="/SignUp">
+                        <Link to="/signup">
                             <button className="flex justify-center items-center
                             w-20
                             h-8
@@ -43,10 +43,10 @@ const Navbar = ()=>{
                             text-center
                             font-bold
                             hover:bg-slate-800">
-                            sign-up   
+                            Sign-Up   
                             </button>
                         </Link>
-                        <Link to="SignIn">
+                        <Link to="/signin">
                             <button className=" 
                             w-20
                             h-8
@@ -60,7 +60,7 @@ const Navbar = ()=>{
                             text-center
                             font-bold
                             hover:bg-slate-800">
-                                sign-in
+                                Sign-In
                             </button>
                         </Link>
                        
