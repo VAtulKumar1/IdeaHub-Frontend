@@ -1,5 +1,6 @@
-import {  Component, useState } from "react";
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
+
 
 
 
@@ -11,11 +12,17 @@ interface userDetails{
 
 const SignUp = ()=>{
 
+
     const [signUp, setSignUp] = useState<userDetails>({
         userName:'',
         email:'',
         password:''
     })
+
+    const [error,setError] = useState<string>('');
+
+    const [toggle,setToggle] = useState<boolean>(false);
+
 
 
     const handleSubmit = async (e:React.FormEvent)=>{
@@ -28,32 +35,25 @@ const SignUp = ()=>{
                 },
                 body: JSON.stringify(signUp)
               
-            })
+            });
+
+            const data = await response.json();
 
             if(response.ok){
-                console.log("sign-up successfully");
-                {Component:()=><Navigate to="/signin"/>}
+                setToggle(!toggle);
+            }
+            else{
+                const message = data.message;
+                setError(message);
+                {message==='User already exists'? setInterval(()=>{
+                    setToggle(!toggle)
+                },2000):null}
             }
 
-           
-        
-
         }catch(error){
-            console.log(error);
+            setError(error as string);
         }
-        finally{
-
-            const currentUserDetails:userDetails = {
-                userName:'',
-                email:'',
-                password:''
-            };
-
-            setSignUp(()=>({
-                ...currentUserDetails
-            }))
-
-        }
+        
 
     }
 
@@ -67,10 +67,15 @@ const SignUp = ()=>{
 
     }
 
+    
+
+    
+    
+
 
 return(
     <div className="pt-20  flex justify-center">
-            <div className="w-2/6 self-center mt-24 p-10 bg-gradient-to-r from-slate-950 to-slate-800 rounded-xl">
+            <div className="w-2/6 self-center mt-24 p-10 bg-gradient-to-t from-slate-950 to-slate-800 rounded-xl">
     
                         <form className="h-auto flex flex-col gap-4 gap-y-8 " onSubmit={handleSubmit} >
                             <h1 className="flex justify-center font-mono text-white text-3xl font-md">Sign-Up</h1>
@@ -104,6 +109,24 @@ return(
                                 Sign-Up
                             </button>
                         </form>
+                        <h6 className="text-white pt-4">Already signed up ?</h6>
+                        <button className="mt-4 flex justify-center items-center
+                        pt-1
+                        pb-2 
+                        w-16
+                        h-6
+                        border-2
+                        border-slate-400
+                        bg-slate-900
+                        text-white
+                        shadow-slate-400
+                        shadow-sm
+                        rounded-md
+                        text-center
+                        font-bold
+                        hover:bg-slate-800" onClick={()=>(setToggle(!toggle))}>sign-in</button>
+                        {toggle && <Navigate to= '/signin'/>}
+                        {error && <p className="mt-4 self-center text-red-800">{error}</p>}
                     
             </div>
            
