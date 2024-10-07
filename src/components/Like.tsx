@@ -7,17 +7,31 @@ interface likeProps {
 }
 
 export const Like: React.FC<likeProps> = (props) => {
-    const [like, setLike] = useState<number>(props.likes);
+    const [likes, setLikes] = useState<number>(props.likes);
+    const [liked, setLiked] = useState<boolean>(true);
 
     const handleLike = async (id: string) => {
         try {
-            const res = await fetch(`/ideahub/like/${id}`, {
-                method: "PATCH",
-                credentials: "include",
-            });
+            if (liked) {
+                const res = await fetch(`/ideahub/like/${id}`, {
+                    method: "PATCH",
+                    credentials: "include",
+                });
 
-            if (res.ok) {
-                setLike(like + 1);
+                if (res.ok) {
+                    setLiked(!liked);
+                    setLikes(likes + 1);
+                }
+            } else {
+                const res = await fetch(`/ideahub/dislike/${id}`, {
+                    method: "PATCH",
+                    credentials: "include",
+                });
+
+                if (res.ok) {
+                    setLiked(!liked);
+                    if (likes > 0) setLikes(likes - 1);
+                }
             }
         } catch (err) {
             console.log(err);
@@ -30,7 +44,7 @@ export const Like: React.FC<likeProps> = (props) => {
                 onClick={() => handleLike(props.id)}
                 className="text-2xl"
             />
-            <span>{`${like}`}</span>
+            <span>{`${likes}`}</span>
         </>
     );
 };
