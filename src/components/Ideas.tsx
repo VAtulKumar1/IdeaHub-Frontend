@@ -16,17 +16,6 @@ interface Idea {
 const Ideas = ({ path }: { path: string }) => {
     const [ideas, setIdeas] = useState<Idea[]>([]);
 
-    const handleLike = async (id: string) => {
-        try {
-            const res = await fetch(`/ideahub/like/${id}`, {
-                method: "PATCH",
-                credentials: "include",
-            });
-
-            console.log(await res.json());
-        } catch (error) {}
-    };
-
     const fetchIdeas = async () => {
         try {
             const response = await fetch(`/ideahub/ideas/${path}`, {
