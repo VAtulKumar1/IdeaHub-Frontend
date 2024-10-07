@@ -15,15 +15,21 @@ interface Idea {
 
 const Ideas = ({ path }: { path: string }) => {
     const [ideas, setIdeas] = useState<Idea[]>([]);
+    const [page, setPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(1);
 
     const fetchIdeas = async () => {
         try {
-            const response = await fetch(`/ideahub/ideas/${path}`, {
-                method: "GET",
-                credentials: "include",
-            });
-            const data = await response.json();
-            setIdeas(data);
+            const response = await fetch(
+                `/ideahub/ideas/${path}?skip=${page * 9 - 9}&limit=${9}`,
+                {
+                    method: "GET",
+                    credentials: "include",
+                }
+            );
+            const { ideas, totalIdeas } = await response.json();
+            setIdeas(ideas);
+            setTotalPages(totalIdeas);
         } catch (error) {
             if (error instanceof Error) {
                 console.log(error.message);
@@ -33,10 +39,13 @@ const Ideas = ({ path }: { path: string }) => {
 
     useEffect(() => {
         fetchIdeas();
-    }, [path]);
+    }, [path, page]);
 
     return (
         <div>
+            {/* <h1 className="text-white font-mono font-bold text-5xl">
+                More Than 500 <span className="text-red-600">Ideas</span>
+            </h1> */}
             <div className="pl-20 grid gird-cols-1 md:grid-cols-2 md:gap-x-6 lg:gap-x-10 lg:grid-cols-3 gap-x-10 gap-y-10">
                 {ideas.map((idea) => (
                     <div
@@ -83,6 +92,36 @@ const Ideas = ({ path }: { path: string }) => {
                     </div>
                 ))}
             </div>
+            {ideas.length > 0 && (
+                <div className="pt-10 text-white font-bold font-mono flex flex-row justify-center gap-x-4">
+                    {page > 1 && (
+                        <span
+                            className="p-2 border-2 border-slate-400 rounded-md hover:text-red-600 "
+                            onClick={() => setPage(page - 1)}
+                        >
+                            prev
+                        </span>
+                    )}
+                    {[...Array(Math.ceil(totalPages / 9))].map((_, i) => {
+                        return (
+                            <span
+                                onClick={() => setPage(i + 1)}
+                                className="p-2 border-2 border-slate-400 rounded-md hover:text-red-600 "
+                            >
+                                {i + 1}
+                            </span>
+                        );
+                    })}
+                    {page < Math.ceil(totalPages / 9) && (
+                        <span
+                            className="p-2 border-2 border-slate-400 rounded-md hover:text-red-600 "
+                            onClick={() => setPage(page + 1)}
+                        >
+                            next
+                        </span>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

@@ -35,7 +35,7 @@ const Icon = ({ ideaDetails }: { ideaDetails: Idea }) => {
             ) : (
                 <div
                     key={ideaDetails._id}
-                    className="overflow-hidden pt-40 fixed inset-0 backdrop-blur-sm bg-slate-900/10  w-screen h-screen flex justify-center"
+                    className="overflow-hidden pt-20 fixed inset-0 backdrop-blur-sm bg-slate-900/10  w-screen h-screen flex justify-center"
                 >
                     <div className="p-6 rounded-lg m-10  flex flex-col w-2/4 h-full bg-gradient-to-r from-slate-950 to-slate-800  text-white">
                         <div
