@@ -14,7 +14,7 @@ interface Idea {
 const Icon = ({ ideaDetails }: { ideaDetails: Idea }) => {
     const [toggle, setToggle] = useState<boolean>(true);
     return (
-        <div>
+        <div className="overflow-y-auto no-scrollbar">
             {toggle ? (
                 <div
                     className="

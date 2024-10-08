@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 interface userDetails {
     userName?: string;
@@ -13,8 +13,6 @@ const SignUp = () => {
         email: "",
         password: "",
     });
-
-    const [error, setError] = useState<string>("");
 
     const [toggle, setToggle] = useState<boolean>(false);
 
@@ -35,7 +33,6 @@ const SignUp = () => {
                 setToggle(!toggle);
             } else {
                 const message = data.message;
-                setError(message);
                 {
                     message === "User already exists" &&
                         setInterval(() => {
@@ -43,9 +40,13 @@ const SignUp = () => {
                         }, 2000);
                 }
             }
-        } catch (error) {
-            setError(error as string);
-        }
+
+            setSignUp({
+                userName: "",
+                email: "",
+                password: "",
+            });
+        } catch (error) {}
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,19 +58,19 @@ const SignUp = () => {
     };
 
     return (
-        <div className="pt-20  flex justify-center">
-            <div className="w-2/6 self-center mt-24 p-10 bg-gradient-to-t from-slate-950 to-slate-800 rounded-xl">
+        <section>
+            <div className="pt-20 flex justify-center items-center p-x-6 p-y-8 mx-auto h-screen">
                 <form
-                    className="h-auto flex flex-col gap-4 gap-y-8 "
+                    className="w-96 h-6/6 flex flex-col p-11 gap-8 bg-slate-900 shadow-md shadow-slate-950 rounded-md border-1"
                     onSubmit={handleSubmit}
                 >
-                    <h1 className="flex justify-center font-mono text-white text-3xl font-md">
-                        Sign-Up
+                    <h1 className="flex justify-center font-mono text-red-600 text-4xl font-bold">
+                        Welcome
                     </h1>
                     <div className="flex flex-col gap-y-6">
                         <div className="flex flex-col jutify-center gap-2">
                             <input
-                                className="input-class text-white h-10 rounded-md p-1 bg-slate-800 border-2 border-slate-950"
+                                className="input-class text-slate-400 h-12 rounded-md p-1 bg-slate-800 border-2 border-slate-700 shadow-md shadow-slate-950"
                                 type="text"
                                 id="userName"
                                 name="userName"
@@ -80,7 +81,7 @@ const SignUp = () => {
                         </div>
                         <div className="flex flex-col jutify-center gap-2">
                             <input
-                                className="input-class h-10 text-white rounded-md p-1 bg-slate-800 border-2 border-slate-950"
+                                className="input-class h-12 text-slate-400 rounded-md p-1 bg-slate-800 border-2 border-slate-700 shadow-md shadow-slate-950"
                                 type="text"
                                 id="email"
                                 name="email"
@@ -91,7 +92,7 @@ const SignUp = () => {
                         </div>
                         <div className="flex flex-col jutify-center gap-2">
                             <input
-                                className="input-class h-10 text-white rounded-md p-1 bg-slate-800 border-2 border-slate-950"
+                                className="input-class h-12 text-slate-400 rounded-md p-1 bg-slate-800 border-2 border-slate-700 shadow-md shadow-slate-950"
                                 type="text"
                                 id="password"
                                 name="password"
@@ -104,13 +105,13 @@ const SignUp = () => {
 
                     <button
                         className="self-center
-                                w-24
-                                h-10
+                                w-72
+                                h-12
                                 border-2
-                                border-slate-400
+                                border-slate-800
                                 bg-slate-900
-                                text-white
-                                shadow-slate-400
+                                text-red-600
+                                shadow-slate-950
                                 shadow-sm
                                 rounded-md
                                 text-center
@@ -119,34 +120,16 @@ const SignUp = () => {
                     >
                         Sign-Up
                     </button>
+                    <div>
+                        <h6 className="text-white pt-4">Already signed up ?</h6>
+                        <Link className="text-red-600 underline" to="/signin">
+                            Sign-in
+                        </Link>
+                    </div>
+                    {toggle && <Navigate to={"/signin"} />}
                 </form>
-                <h6 className="text-white pt-4">Already signed up ?</h6>
-                <button
-                    className="mt-4 flex justify-center items-center
-                        pt-1
-                        pb-2 
-                        w-16
-                        h-6
-                        border-2
-                        border-slate-400
-                        bg-slate-900
-                        text-white
-                        shadow-slate-400
-                        shadow-sm
-                        rounded-md
-                        text-center
-                        font-bold
-                        hover:bg-slate-800"
-                    onClick={() => setToggle(!toggle)}
-                >
-                    sign-in
-                </button>
-                {toggle && <Navigate to="/signin" />}
-                {error && (
-                    <p className="mt-4 self-center text-red-800">{error}</p>
-                )}
             </div>
-        </div>
+        </section>
     );
 };
 

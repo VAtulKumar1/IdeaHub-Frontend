@@ -10,11 +10,13 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import { Layout } from "./components/Layout";
 import { RequireAuth } from "./components/RequireAuth";
+import { Sidebar } from "./components/Sidebar";
 
 function App() {
     return (
         <main className="App w-screen bg-gradient-to-t from-slate-950 to-slate-800">
             <Navbar />
+            <Sidebar />
             <Routes>
                 <Route element={<Layout />}>
                     {/* public routes */}
