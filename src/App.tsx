@@ -1,37 +1,17 @@
 import "./App.css";
-import { Route, Routes, Navigate } from "react-router-dom";
-import AddIdea from "./components/AddIdea";
-import Contact from "./components/Contact";
-import About from "./components/About";
+import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
-import Footer from "./components/Footer";
 import Home from "./components/Home";
-import { Layout } from "./components/Layout";
-import { RequireAuth } from "./components/RequireAuth";
-import { Sidebar } from "./components/Sidebar";
+import Footer from "./components/Footer";
+import { ExploreIdeas } from "./components/ExploreIdeas";
 
 function App() {
     return (
-        <main className="App w-screen bg-gradient-to-t from-slate-950 to-slate-800">
+        <main className="absolute top-0 z-[-2] h-auto w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]">
             <Navbar />
-            <Sidebar />
             <Routes>
-                <Route element={<Layout />}>
-                    {/* public routes */}
-                    <Route path="/signup" element={<SignUp />} />
-                    <Route path="/signin" element={<SignIn />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-
-                    {/* private routes */}
-                    <Route element={<RequireAuth />}>
-                        <Route path="/" element={<Navigate to="/signup" />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/post" element={<AddIdea />} />
-                    </Route>
-                </Route>
+                <Route path="/" element={<Home />} />
+                <Route path="/explore-ideas" element={<ExploreIdeas />} />
             </Routes>
             <Footer />
         </main>
