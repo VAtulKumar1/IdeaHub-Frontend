@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Icon from "./Icon";
 import { Like } from "./Like";
-import { HiOutlineChatBubbleOvalLeft } from "react-icons/hi2";
 
 interface Idea {
     title: string;
@@ -80,7 +79,6 @@ const Ideas = ({ path }: { path: string }) => {
 
                         <div className="flex flex-row gap-x-4 justify-between items-center mb-4 ml-6 mr-4">
                             <div className="flex flex-row items-center gap-x-2 text-slate-700 hover:text-green-600">
-                                <HiOutlineChatBubbleOvalLeft className="text-2xl" />
                                 <span>40</span>
                             </div>
                             <div className="flex flex-row items-center gap-x-2 text-slate-700 hover:text-red-600">

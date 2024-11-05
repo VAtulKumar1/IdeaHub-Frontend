@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { CiHeart } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 interface Idea {
     title: string;
@@ -16,8 +18,13 @@ interface IdeaResponse {
 }
 
 export const ExploreIdeas = () => {
-    const [currentBtnName, setCurrentbtnName] = useState<string>("");
+    const [currentBtnName, setCurrentbtnName] = useState<string>("All Ideas");
     const [ideas, setIdeas] = useState<Idea[]>([]);
+    const navigate = useNavigate();
+
+    const handleIdea = (id: string) => {
+        return navigate("/idea", { state: { key: id } });
+    };
 
     const handleClick = async (nameOfBtn: string) => {
         try {
@@ -29,15 +36,13 @@ export const ExploreIdeas = () => {
 
     const fetchIdeas = async (name: string) => {
         try {
-            const response = await fetch(
-                `/ideahub/ideas/${name.toLowerCase()}`,
-                {
-                    method: "GET",
-                }
-            );
+            if (name === "All Ideas") name = "All";
+            const url = `/ideahub/ideas/${name.toLowerCase()}`;
+            const response = await fetch(url, {
+                method: "GET",
+            });
             if (response.ok) {
-                const { ideas, totalIdeas }: IdeaResponse =
-                    await response.json();
+                const { ideas }: IdeaResponse = await response.json();
                 setIdeas(ideas);
             }
         } catch (Err) {
@@ -55,8 +60,7 @@ export const ExploreIdeas = () => {
 
     return (
         <div className="relative mt-[120px] z-[5] md:mt-[159px] flex flex-col jusitfy-center items-center w-full">
-            <div className="border max-md:relative rounded-xl border-solid border-white/20 w-[90%] lg:w-[95%] flex flex-row justify-between items-center max-w-[1296px] h-[886px] lg:gap-x-5 lg:p-5 bg-black/20">
-                <div className="underlay hidden md:hidden h-full w-full bg-black opacity-40 z-[3]"></div>
+            <div className="border max-md:relative rounded-xl border-solid border-white/20 w-[90%] lg:w-[95%] flex flex-row justify-between items-center max-w-[1296px] h-[886px] lg:gap-x-5 lg:p-5 bg-gradient-to-t from-black/20 to-red-600/20">
                 <div className="h-full lg:w-fit absolute lg:relative overflow-y-scroll scrollbar-none flex flex-col justify-start items-center max-lg:w-0 max-lg:hidden transition-all duration-300 ">
                     <div className="h-[68px] w-full max-lg:flex max;lg:flex-row max-lg:justify-between max-lg:items-center text-left p-5 text-[#F9F9F9] font-inter tracking-tight text-[20px] border-b-[1px] border-b-white/20 mb-5">
                         <p>Ideas</p>
@@ -64,39 +68,39 @@ export const ExploreIdeas = () => {
                     <div className="flex flex-col gap-y-2">
                         <button
                             onClick={() => handleClick("All Ideas")}
-                            className="h-[48px] w-[251px] cursor-pointer p-5 flex flex-row justify-center items-center gap-3 mb-[2px] hover:bg-gradient-to-r hover:from-white/20 hover:via-[#B388F0]/20 hover:to-white/20 rounded-md border border-solid border-white/20 transition-all duration-150"
+                            className="h-[48px] w-[251px] cursor-pointer p-5 flex flex-row justify-center items-center gap-3 mb-[2px] hover:bg-gradient-to-r hover:from-black/50 hover:to-red-600/50 rounded-md border border-solid border-white/20 transition-all duration-150"
                         >
-                            <span className="font-mono text-neutral-50 tracking-tight text-[15px]">
+                            <span className="font-mono font-medium text-xl text-neutral-50 tracking-tight text-[15px]">
                                 All Ideas
                             </span>
                         </button>
                         <button
                             onClick={() => handleClick("Popular")}
-                            className="h-[48px] w-[251px] cursor-pointer p-5 flex flex-row justify-center items-center gap-3 mb-[2px] bg-gradient-to-r from-white/20 via-[#B388F0]/20 to-white/20 rounded-md border border-solid border-white/20 transition-all duration-150"
+                            className="h-[48px] w-[251px] cursor-pointer p-5 flex flex-row justify-center items-center gap-3 mb-[2px] hover:bg-gradient-to-r hover:from-black/50 hover:to-red-600/50 rounded-md border border-solid border-white/20 transition-all duration-150"
                         >
-                            <span className="font-mono hover:underline text-neutral-50 tracking-tight text-[15px]">
+                            <span className="font-mono font-medium text-xl text-neutral-50 tracking-tight text-[15px]">
                                 Popular
                             </span>
                         </button>
                         <button
                             onClick={() => handleClick("Latest")}
-                            className="h-[48px] w-[251px] cursor-pointer p-5 flex flex-row justify-center items-center gap-3 mb-[2px] bg-gradient-to-r from-white/20 via-[#B388F0]/20 to-white/20 rounded-md border border-solid border-white/20 transition-all duration-150"
+                            className="h-[48px] w-[251px] cursor-pointer p-5 flex flex-row justify-center items-center gap-3 mb-[2px] hover:bg-gradient-to-r hover:from-black/50 hover:to-red-600/50 rounded-md border border-solid border-white/20 transition-all duration-150"
                         >
-                            <span className="font-mono hover:underline text-neutral-50 tracking-tight text-[15px]">
+                            <span className="font-mono font-medium text-xl text-neutral-50 tracking-tight text-[15px]">
                                 Latest
                             </span>
                         </button>
                         <button
                             onClick={() => handleClick("Oldest")}
-                            className="h-[48px] w-[251px] cursor-pointer p-5 flex flex-row justify-center items-center gap-3 mb-[2px] bg-gradient-to-r from-white/20 via-[#B388F0]/20 to-white/20 rounded-md border border-solid border-white/20 transition-all duration-150"
+                            className="h-[48px] w-[251px] cursor-pointer p-5 flex flex-row justify-center items-center gap-3 mb-[2px] hover:bg-gradient-to-r hover:from-black/50 hover:to-red-600/50 rounded-md border border-solid border-white/20 transition-all duration-150"
                         >
-                            <span className="font-mono hover:underline text-neutral-50 tracking-tight text-[15px]">
+                            <span className="font-mono font-medium text-xl text-neutral-50 tracking-tight text-[15px]">
                                 Oldest
                             </span>
                         </button>
                     </div>
                 </div>
-                <div className="w-full relative flex-1 h-full border border-solid rounded-xl bg-[#351689]/20 lg:rounded-md border-white/20 p-5 flex flex-col justify-start items-center gap-y-10 overflow-y-hidden">
+                <div className="w-full relative flex-1 h-full border border-solid rounded-xl  lg:rounded-md border-white/20 p-5 flex flex-col justify-start items-center gap-y-10 overflow-y-hidden">
                     <div className="flex flex-row justify-between w-full items-start h-[53px] sticky border-b-[1px] border-b-white/20">
                         <div className="flex flex-row justify-start items-center w-fit h-fit max-lg:pt-1 pb-4 gap-x-1 md:gap-x-3">
                             <span className="font-mono line-clamp-1 font-semibold text-neutral-50 text-[4px] md:text-[16px] lg:text-[20px] tracking-tight">
@@ -118,19 +122,45 @@ export const ExploreIdeas = () => {
                     </div>
                     <div className="w-full h-fit grid grid-flow-row grid-cols-1 lg:grid-cols-2 gap-5 overflow-y-scroll scrollbar-none">
                         {ideas.map((idea: Idea) => (
-                            <div className="w-full cursor-pointer h-[216px] p-5 flex flex-col justify-between items-start border border-solid border-white/20 rounded-xl ">
-                                <p className="text-white font-mono text-2xl">
-                                    {idea.title}
-                                </p>
-                                <p className="text-white/20 font-mono">
-                                    {idea.description}
-                                </p>
-                                <p className="text-white/20 font-mono">
-                                    {idea.likes}
-                                </p>
-                                <p className="text-white/20 font-mono">
-                                    {idea.tag}
-                                </p>
+                            <div
+                                onClick={() => handleIdea(idea._id)}
+                                key={idea._id}
+                                className="w-full cursor-pointer h-[216px] p-5 flex flex-col justify-between  border border-solid border-white/20 rounded-xl bg-gradient-to-t to-black/30 from-red-600/30 hover:bg-gradient-to-t hover:to-black/50 hover:from-red-600/50 "
+                            >
+                                <div className="flex flex-col justify-start">
+                                    <p className="text-white font-mono  font-semibold text-2xl">
+                                        {idea.title}
+                                    </p>
+                                    <p className="text-white/50 font-mono">
+                                        {idea.description}
+                                    </p>
+                                </div>
+
+                                <div className="flex flex-row justify-between items-center">
+                                    {idea.tag.toLowerCase() === "beginner" && (
+                                        <p className="text-black font-mono p-2 border border-solid border-white/20 bg-gradient-to-t from-black/50 to to-green-600/50 rounded-full w-auto text-center hover:from-black hover:to-green-600">
+                                            {idea.tag}
+                                        </p>
+                                    )}
+                                    {idea.tag.toLowerCase() ===
+                                        "intermediate" && (
+                                        <p className="text-black font-mono p-2 border border-solid border-white/20 bg-gradient-to-t from-black/70 to-yellow-500/70 rounded-full w-auto text-center hover:from-black hover:to-yellow-500">
+                                            {idea.tag}
+                                        </p>
+                                    )}
+                                    {idea.tag.toLowerCase() === "advanced" && (
+                                        <p className="text-black font-mono p-2 border border-solid border-white/20 bg-gradient-to-t from-black/30 to-red-600/30 rounded-full w-auto text-center hover:from-black hover:bg-red-600">
+                                            {idea.tag}
+                                        </p>
+                                    )}
+
+                                    <p className="flex gap-1 items-center text-white/20 font-mono  hover:text-red-400/30">
+                                        <CiHeart className="text-2xl" />
+                                        <span className="text-xl">
+                                            {idea.likes}
+                                        </span>
+                                    </p>
+                                </div>
                             </div>
                         ))}
                     </div>
